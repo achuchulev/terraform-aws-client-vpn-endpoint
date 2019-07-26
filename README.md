@@ -15,15 +15,6 @@ git clone https://github.com/achuchulev/terraform-aws-client-vpn-endpoint.git
 cd terraform-aws-client-vpn-endpoint
 ```
 
-### Issue self signed server and client sertificates
-
-Run `scripts/gen_acm_cert.sh some_cert_dir_name some_domain_name`
-
-Script will:
-  - create private Certificate Authority (CA)
-  - issue server certificate
-  - issue client certificate
-
 ### Create `terraform.tfvars` file
 
 #### Inputs
@@ -37,6 +28,14 @@ Script will:
 | cert_dir | Some certificate directory name     | string  | yes | no
 | domain | Some domain name     | string  | yes | no
 
+### Issue self signed server and client sertificates
+
+Run `scripts/gen_acm_cert.sh <cert_dir> <domain>`
+
+Script will:
+  - create private Certificate Authority (CA)
+  - issue server certificate
+  - issue client certificate
 
 ### Initialize terraform and plan/apply
 
