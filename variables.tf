@@ -1,4 +1,4 @@
-variable "aws_access_key" {}
+givariable "aws_access_key" {}
 
 variable "aws_secret_key" {}
 
@@ -11,7 +11,7 @@ variable "subnet-id" {
 }
 
 variable "cert_dir" {
-  default = "vpn_endpoint_certs"
+  default = "vpn_certs"
 }
 
 variable "domain" {
