@@ -6,9 +6,7 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
-variable "subnet-id" {
-  default = "subnet-0ec213e288c498e14"
-}
+variable "subnet-id" {}
 
 variable "cert_dir" {
   default = "vpn_certs"
