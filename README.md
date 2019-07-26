@@ -1,4 +1,4 @@
-# Sample terraform code to create Client vpn-endpoint
+# Sample terraform code to create Client VPN Endpoint on AWS
 
 ## Prerequisites
 
@@ -56,6 +56,8 @@ terraform apply
   - export client config file
 
 ### Import client config file in your preffered vpn client
+
+### Connect to VPN server
 
   #### Outputs
 
