@@ -32,7 +32,7 @@ cd terraform-aws-client-vpn-endpoint
 
 Run `scripts/gen_acm_cert.sh <cert_dir> <domain>`
 
-Script will:
+- Script will:
   - create private Certificate Authority (CA)
   - issue server certificate
   - issue client certificate
