@@ -21,11 +21,12 @@ cd terraform-aws-client-vpn-endpoint
 
 | Name  |	Description |	Type |  Default |	Required
 | ----- | ----------- | ---- |  ------- | --------
-| aws_access_key   | AWS access key | string  | -   | yes
-| aws_secret_key   | AWS secret key | string  | -   | yes
-| aws_region       | AWS region     | string  | yes | yes
-| subnet-id   | AWS VPC subnet id | string  | -   | yes
-| cert_dir | Some certificate directory name     | string  | yes | no
+| aws_access_key | AWS access key | string  | -   | yes
+| aws_secret_key | AWS secret key | string  | -   | yes
+| aws_region | AWS region     | string  | yes | yes
+| subnet-id | AWS VPC subnet id | string  | -   | yes
+| client_cidr_block | The IPv4 address range, in CIDR notation being /22 or greater, from which to assign client IP addresses | string  | `18.0.0.0/22` | no
+| cert_dir | Some certificate directory name | string  | yes | no
 | domain | Some domain name     | string  | yes | no
 
 ### Issue self signed server and client sertificates
