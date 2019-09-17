@@ -1,4 +1,4 @@
-# Sample terraform code to create Client VPN Endpoint on AWS
+# Terraform module to create Client VPN Endpoint on AWS
 
 ## Prerequisites
 
