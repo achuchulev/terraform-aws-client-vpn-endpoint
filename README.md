@@ -30,7 +30,7 @@ Note: this is based on [official AWS tutorial](https://docs.aws.amazon.com/vpn/l
 ```
 access_key = "your_aws_access_key"
 secret_key = "your_aws_secret_key"
-accepter_subnet_id = "subnet-xxxxxx"
+subnet_id = "subnet-xxxxxx"
 ```
 
 #### Create `variables.tf` file
@@ -47,7 +47,7 @@ variable "cert_dir" {
   default = "vpn_certs"
 }
 
-variable "accepter_subnet_id" {}
+variable "subnet_id" {}
 
 variable "domain" {
   default = "example.com"
@@ -61,7 +61,7 @@ variable "domain" {
 | aws_access_key | AWS access key | string  | -   | yes
 | aws_secret_key | AWS secret key | string  | -   | yes
 | aws_region | AWS region     | string  | yes | yes
-| subnet-id | The ID of the subnet to associate with the Client VPN endpoint. | string  | -   | yes
+| subnet_id | The ID of the subnet to associate with the Client VPN endpoint. | string  | -   | yes
 | client_cidr_block | The IPv4 address range, in CIDR notation being /22 or greater, from which to assign client IP addresses | string  | `18.0.0.0/22` | no
 | cert_dir | Some certificate directory name | string  | yes | no
 | domain | Some domain name     | string  | yes | no
