@@ -41,7 +41,7 @@ resource "aws_ec2_client_vpn_endpoint" "client-vpn-endpoint" {
 
 resource "aws_ec2_client_vpn_network_association" "client-vpn-network-association" {
   client_vpn_endpoint_id = aws_ec2_client_vpn_endpoint.client-vpn-endpoint.id
-  subnet_id              = var.subnet-id
+  subnet_id              = var.subnet_id
 }
 
 resource "null_resource" "authorize-client-vpn-ingress" {
@@ -54,7 +54,7 @@ resource "null_resource" "authorize-client-vpn-ingress" {
 
 resource "null_resource" "create-client-vpn-route" {
   provisioner "local-exec" {
-    command = "aws --region ${var.aws_region} ec2 create-client-vpn-route --client-vpn-endpoint-id ${aws_ec2_client_vpn_endpoint.client-vpn-endpoint.id} --destination-cidr-block 0.0.0.0/0 --target-vpc-subnet-id ${var.subnet-id} --description Internet-Access"
+    command = "aws --region ${var.aws_region} ec2 create-client-vpn-route --client-vpn-endpoint-id ${aws_ec2_client_vpn_endpoint.client-vpn-endpoint.id} --destination-cidr-block 0.0.0.0/0 --target-vpc-subnet-id ${var.subnet_id} --description Internet-Access"
   }
 
   depends_on = [aws_ec2_client_vpn_endpoint.client-vpn-endpoint]
