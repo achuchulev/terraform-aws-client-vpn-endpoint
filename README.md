@@ -8,29 +8,13 @@
 
 ## How to use
 
-#### Download and run following script to generate Server and Client Certificates and Keys
-
-```
-$ curl -o ./gen_acm_cert.sh https://raw.githubusercontent.com/achuchulev/terraform-aws-client-vpn-endpoint/master/scripts/gen_acm_cert.sh
-$ chmod +x gen_acm_cert.sh
-$ ./gen_acm_cert.sh <cert_dir> <domain>`
-```
-
-- Script will:
-  - create private Certificate Authority (CA)
-  - issue server certificate
-  - issue client certificate
-
-```
-Note: this is based on [official AWS tutorial](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/authentication-authorization.html#mutual)
-```
-
 #### Create `terraform.tfvars` file
 
 ```
 access_key = "your_aws_access_key"
 secret_key = "your_aws_secret_key"
-subnet_id = "subnet-xxxxxx"
+subnet_id  = "subnet-xxxxxx"
+domain     = "your.domain"
 ```
 
 #### Create `variables.tf` file
@@ -58,13 +42,14 @@ variable "domain" {
 
 | Name  |	Description |	Type |  Default |	Required
 | ----- | ----------- | ---- |  ------- | --------
-| aws_access_key | AWS access key | string  | -   | yes
-| aws_secret_key | AWS secret key | string  | -   | yes
-| aws_region | AWS region     | string  | yes | yes
-| subnet_id | The ID of the subnet to associate with the Client VPN endpoint. | string  | -   | yes
+| aws_access_key | AWS access key | string  | - | yes
+| aws_secret_key | AWS secret key | string  | - | yes
+| aws_region | AWS region | string  | yes | yes
+| subnet_id | The ID of the subnet to associate with the Client VPN endpoint. | string  | - | yes
 | client_cidr_block | The IPv4 address range, in CIDR notation being /22 or greater, from which to assign client IP addresses | string  | `18.0.0.0/22` | no
-| cert_dir | Some certificate directory name | string  | yes | no
-| domain | Some domain name     | string  | yes | no
+| cert_dir | Some certificate directory name | string | yes | no
+| domain | Some domain name | string  | yes | no
+
 
 #### Create `main.tf` file
 
@@ -72,18 +57,37 @@ variable "domain" {
 module "aws-client-vpn-test" {
   source = "git@github.com:achuchulev/terraform-aws-client-vpn-endpoint.git"
 
-  aws_access_key     = var.access_key
-  aws_secret_key     = var.secret_key
-  aws_region         = var.aws_region
-  accepter_subnet_id = var.accepter_subnet_id
+  aws_access_key = var.access_key
+  aws_secret_key = var.secret_key
+  aws_region     = var.aws_region
+  subnet_id      = var.accepter_subnet_id
+  domain         = var.domain
 }
 
 ```
 
-### Initialize terraform and plan/apply
+### Initialize terraform 
 
 ```
 terraform init
+```
+
+#### Generate Server and Client Certificates and Keys
+
+Run `$ .terraform/modules/aws-client-vpn-test/scripts/gen_acm_cert.sh ./<cert_dir> <domain>`
+
+- Script will:
+  - create private Certificate Authority (CA)
+  - issue server certificate
+  - issue client certificate
+
+```
+Note: this is based on [official AWS tutorial](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/authentication-authorization.html#mutual)
+```
+
+### Deploy Client VPN
+
+```
 terraform plan
 terraform apply
 ```
