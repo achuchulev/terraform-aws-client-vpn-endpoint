@@ -9,21 +9,21 @@ terraform {
 }
 
 resource "aws_acm_certificate" "client_cert" {
-  private_key       = file("easy-rsa/${var.cert_dir}/client1.${var.domain}.key")
-  certificate_body  = file("easy-rsa/${var.cert_dir}/client1.${var.domain}.crt")
-  certificate_chain = file("easy-rsa/${var.cert_dir}/ca.crt")
+  private_key       = file("${path.root}/${var.cert_dir}/client1.${var.domain}.key")
+  certificate_body  = file("${path.root}/${var.cert_dir}/client1.${var.domain}.crt")
+  certificate_chain = file("${path.root}/${var.cert_dir}/ca.crt")
 }
 
 resource "aws_acm_certificate" "server_cert" {
-  private_key       = file("easy-rsa/${var.cert_dir}/server.key")
-  certificate_body  = file("easy-rsa/${var.cert_dir}/server.crt")
-  certificate_chain = file("easy-rsa/${var.cert_dir}/ca.crt")
+  private_key       = file("${path.root}/${var.cert_dir}/server.key")
+  certificate_body  = file("${path.root}/${var.cert_dir}/server.crt")
+  certificate_chain = file("${path.root}/${var.cert_dir}/ca.crt")
 }
 
 resource "aws_ec2_client_vpn_endpoint" "client-vpn-endpoint" {
   description            = "terraform-clientvpn-endpoint"
   server_certificate_arn = aws_acm_certificate.server_cert.arn
-  client_cidr_block      = "10.10.0.0/16"
+  client_cidr_block      = var.client_cidr_block
 
   authentication_options {
     type                       = "certificate-authentication"
@@ -75,7 +75,7 @@ resource "null_resource" "export-client-config" {
 
 resource "null_resource" "append-client-config-certs" {
   provisioner "local-exec" {
-    command = "scripts/client_config_append_certs_path.sh ${path.root} ${var.cert_dir} ${var.domain}"
+    command = "${path.module}/scripts/client_config_append_certs_path.sh ${path.root} ${var.cert_dir} ${var.domain}"
   }
 
   depends_on = [null_resource.export-client-config]
