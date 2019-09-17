@@ -81,7 +81,6 @@ Run `$ .terraform/modules/aws-client-vpn-test/scripts/gen_acm_cert.sh ./<cert_di
   - issue server certificate
   - issue client certificate
 
-```
 Note: This is based on official AWS tutorial described [here](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/authentication-authorization.html#mutual)
 
 ### Deploy Client VPN
