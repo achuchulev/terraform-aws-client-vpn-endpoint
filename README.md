@@ -8,7 +8,7 @@
 
 ## How to use
 
-### Download and run following script to generate Server and Client Certificates and Keys
+#### Download and run following script to generate Server and Client Certificates and Keys
 
 ```
 $ curl -o ./gen_acm_cert.sh https://raw.githubusercontent.com/achuchulev/terraform-aws-client-vpn-endpoint/master/scripts/gen_acm_cert.sh
@@ -24,7 +24,7 @@ $ gen_acm_cert.sh <cert_dir> <domain>`
 Note: this is based on [official AWS tutorial](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/authentication-authorization.html#mutual)
 ```
 
-### Create `terraform.tfvars` file
+#### Create `terraform.tfvars` file
 
 ```
 access_key = "your_aws_access_key"
@@ -32,7 +32,7 @@ secret_key = "your_aws_secret_key"
 accepter_subnet_id = "subnet-xxxxxx"
 ```
 
-### Create `variables.tf` file
+#### Create `variables.tf` file
 
 ```
 variable "access_key" {}
@@ -53,7 +53,7 @@ variable "domain" {
 }
 ```
 
-#### Inputs
+##### Inputs
 
 | Name  |	Description |	Type |  Default |	Required
 | ----- | ----------- | ---- |  ------- | --------
@@ -65,7 +65,7 @@ variable "domain" {
 | cert_dir | Some certificate directory name | string  | yes | no
 | domain | Some domain name     | string  | yes | no
 
-### Create `main.tf` file
+#### Create `main.tf` file
 
 ```
 module "aws-client-vpn-test" {
@@ -100,7 +100,7 @@ terraform apply
 
 ### Connect to VPN server
 
-  #### Outputs
+  ##### Outputs
 
 | Name  |	Description 
 | ----- | ----------- 
