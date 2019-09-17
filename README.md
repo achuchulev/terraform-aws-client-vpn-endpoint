@@ -12,6 +12,7 @@
 
 ```
 $ curl -o ./gen_acm_cert.sh https://raw.githubusercontent.com/achuchulev/terraform-aws-client-vpn-endpoint/master/scripts/gen_acm_cert.sh
+$ chmod +x gen_acm_cert.sh
 $ gen_acm_cert.sh <cert_dir> <domain>`
 ```
 
