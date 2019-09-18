@@ -5,6 +5,7 @@
 - git
 - terraform ( ~> 0.12 )
 - AWS subscription
+- Public subnet (i.e. subnet assosiated with Internet GW)
 
 ## How to use
 
@@ -54,7 +55,7 @@ variable "domain" {
 #### Create `main.tf` file
 
 ```
-module "aws-client-vpn-test" {
+module "aws-client-vpn" {
   source = "git@github.com:achuchulev/terraform-aws-client-vpn-endpoint.git"
 
   aws_access_key = var.access_key
@@ -74,20 +75,21 @@ terraform init
 
 #### Generate Server and Client Certificates and Keys
 
-Run `$ .terraform/modules/aws-client-vpn-test/scripts/gen_acm_cert.sh ./<cert_dir> <domain>`
+Run `$ .terraform/modules/aws-client-vpn/scripts/gen_acm_cert.sh ./<cert_dir> <domain>`
 
 - Script will:
+  - make a `cert_dir` in the root
   - create private Certificate Authority (CA)
-  - issue server certificate
-  - issue client certificate
-
+  - issue server certificate chain
+  - issue client certificate chain
+  
 Note: This is based on official AWS tutorial described [here](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/authentication-authorization.html#mutual)
 
 ### Deploy Client VPN
 
 ```
-terraform plan
-terraform apply
+$ terraform plan
+$ terraform apply
 ```
 
 - `Terraform apply` will:
@@ -97,14 +99,13 @@ terraform apply
   - make VPN network association with specified VPC subnet
   - authorize all clients vpn ingress
   - create new route to allow Internet access for VPN clients
-  - export client config file
+  - export client config file `client-config.ovpn` in the root
 
-### Import client config file in your preffered vpn client
-
-### Connect to VPN server
-
-  ##### Outputs
+##### Outputs
 
 | Name  |	Description 
 | ----- | ----------- 
 | client_vpn_endpoint_id | Client VPN Endpoint id
+
+
+### Import client config file in your preffered vpn client and connect
