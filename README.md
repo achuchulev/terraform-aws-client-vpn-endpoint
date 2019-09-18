@@ -5,7 +5,7 @@
 - git
 - terraform ( ~> 0.12 )
 - AWS subscription
-- Public subnet (i.e. subnet assosiated with Internet GW)
+- VPC with Internet GW and a subnet having route assosiated with the IGW (i.e a public subnet)
 
 ## How to use
 
