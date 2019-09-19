@@ -49,7 +49,10 @@ resource "null_resource" "authorize-client-vpn-ingress" {
     command = "aws --region ${var.aws_region} ec2 authorize-client-vpn-ingress --client-vpn-endpoint-id ${aws_ec2_client_vpn_endpoint.client-vpn-endpoint.id} --target-network-cidr 0.0.0.0/0 --authorize-all-groups"
   }
 
-  depends_on = [aws_ec2_client_vpn_endpoint.client-vpn-endpoint]
+  depends_on = [
+    aws_ec2_client_vpn_endpoint.client-vpn-endpoint,
+    aws_ec2_client_vpn_network_association.client-vpn-network-association
+  ]
 }
 
 resource "null_resource" "create-client-vpn-route" {
@@ -57,7 +60,10 @@ resource "null_resource" "create-client-vpn-route" {
     command = "aws --region ${var.aws_region} ec2 create-client-vpn-route --client-vpn-endpoint-id ${aws_ec2_client_vpn_endpoint.client-vpn-endpoint.id} --destination-cidr-block 0.0.0.0/0 --target-vpc-subnet-id ${var.subnet_id} --description Internet-Access"
   }
 
-  depends_on = [aws_ec2_client_vpn_endpoint.client-vpn-endpoint]
+  depends_on = [
+    aws_ec2_client_vpn_endpoint.client-vpn-endpoint,
+    null_resource.authorize-client-vpn-ingress
+  ]
 }
 
 resource "null_resource" "export-client-config" {
@@ -80,4 +86,3 @@ resource "null_resource" "append-client-config-certs" {
 
   depends_on = [null_resource.export-client-config]
 }
-
