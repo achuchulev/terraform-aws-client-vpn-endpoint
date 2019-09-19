@@ -22,12 +22,12 @@ resource "aws_acm_certificate" "server_cert" {
 
 resource "aws_ec2_client_vpn_endpoint" "client-vpn-endpoint" {
   description            = "terraform-clientvpn-endpoint"
-  server_certificate_arn = "arn:aws:acm:us-east-1:618541241448:certificate/cc679b81-ea37-4032-a3ee-901061de0d52" #aws_acm_certificate.server_cert.arn
+  server_certificate_arn = aws_acm_certificate.server_cert.arn
   client_cidr_block      = var.client_cidr_block
 
   authentication_options {
     type                       = "certificate-authentication"
-    root_certificate_chain_arn = "arn:aws:acm:us-east-1:618541241448:certificate/5f9e4b96-843c-4717-bcee-82031c681305" #aws_acm_certificate.client_cert.arn
+    root_certificate_chain_arn = aws_acm_certificate.client_cert.arn
   }
 
   connection_log_options {
